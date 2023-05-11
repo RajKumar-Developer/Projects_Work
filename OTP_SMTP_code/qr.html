@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>QR Code Scanner</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Adding Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        #video-container {
+            position: relative;
+            width: 50%;
+            margin: 0 auto;
+        }
+        #video {
+            width: 100%;
+        }
+        #video-box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            width: 50%;
+            height: 50%;
+            border: 2px solid white;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+        <div class="container">
+            <h1 class="mt-4 mb-4 text-center">QR Scanner - TEAM MEDIA Test</h1>
+            <div class="text-center mb-4">
+                
+                <button class="btn btn-primary mr-2" onclick="startScanner()">Scan QR Code</button>
+                <button class="btn btn-secondary" onclick="checkScanner()">Check</button>
+            </div>
+            <div class="form-group">
+                <label for="decodedText">Decoded Text:</label>
+                <input type="text" class="form-control" id="decodedText" readonly>
+            </div>
+            <div id="video-container">
+                <video id="video"></video>
+                <div id="video-box"></div>
+            </div>
+        </div>
+    </form>
+    
+    <!-- Adding Bootstrap JS and jQuery -->
+    <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest"></script>
+        <script>
+        const codeReader = new ZXing.BrowserQRCodeReader();
+        const decodedText = document.getElementById("decodedText");
+        const video = document.getElementById("video");
+        const videoBox = document.getElementById("video-box");
+        const temp = document.getElementById("decodedText");
+        function startScanner() {
+            codeReader
+                .decodeFromVideoDevice(undefined, "video", (result, error) => {
+                    if (result) {
+                        decodedText.value = result.text;
+                        temp = result.text;
+                        codeReader.reset();
+                        video.srcObject.getTracks().forEach(track => {
+                            track.stop();
+                        });
+                        
+                    }
+                    if (error) {
+                        console.error(error);
+                    }
+                }, videoBox)
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+        function checkScanner(){
+            if(temp.value == "CB.EN.U4CSE21435" || temp.value == "CB.EN.U4CSE21446")
+            {
+                alert("Success");
+            }
+            else if(temp.value == "CB.EN.U4CSE21263"){
+
+                alert("Hey Ammu, I love you");
+            }
+            else if(temp.value == "CB.EN.U4CSE21205"){
+                
+                alert("Hey Apoorva");
+            }
+            else if(temp.value == "CB.EN.U4CSE21634"){
+                
+                alert("Hey Trisha");
+            }
+            else if(temp.value == "CB.EN.U4CSE21326"){
+                
+                alert("Hey Nithya");
+            }
+
+            else{
+                alert("not done");
+            }
+        }
+       
+        
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.17.1/esm/index.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+</body>
+</html>
